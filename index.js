@@ -25,29 +25,15 @@ var jobAppSchema = mongoose.Schema({
 //MODEL COLLECTION 
 var JobApp = mongoose.model('JobApp', jobAppSchema)
 
-var yob = new JobApp({
-	name	: req.body.name,
-	bio: 'an adventuror',
-	skills: ['walking', 'carrying rings', 'being small'],
-	years: 13,
-	why: 'looking for a new mission'
-})
-
-yob.save(function(err, document){
-	console.log('Error: ', err)
-	console.log('Docu: ', document)
-	res.send(document)
-})
-
 // Routes \\
 
 app.get('/', function(req, res) {
-	res.sendFile('html/index.html', {root : './public'});
+	res.sendFile('index.html', {root : './public'});
 });
 
 // displays a list of applicants
 app.get('/applicants', function(req, res){
-	res.sendFile('html/applicants.html', {root : './public'});
+	res.sendFile('applicants.html', {root : './public'});
 });
 
 // creates and applicant
@@ -56,11 +42,28 @@ app.post('/applicant', function(req, res){
 	// from the post body and store it in the database
 	res.send('Success!')
 	console.log(req.body)
+
+		var yob = new JobApp({
+		name: req.body.name,
+		bio: req.body.bio,
+		skills: req.body.skills,
+		years: req.body.years,
+		why: req.body.why
+	})
+
+	yob.save()
+
+	res.redirect('/html/success.html')
 });
 
-app.get('/success', function(req, res){
-	res.redirect('/success')
 
+//Sending data for applicants 
+app.get('/api/applicants', function(req, res){
+	JobApp.find({}, function(err, results){
+		console.log(err)
+		console.log(results)
+		res.send(results)
+	})
 })
 
 

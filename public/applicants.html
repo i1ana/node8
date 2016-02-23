@@ -7,11 +7,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.js"></script>
   </head>
   <body ng-controller="applicantController">
-	  
+
     <div class="container">
       <h1>Applicants</h1>
-      <ul id="applications" class="list-unstyled">
-        <li>Applicants should go here.</li>
+      <ul id="applications" class="list-unstyled" ng-repeat="app in applicant">
+        <li class='btn btn-warning'>{{app}}</li>
+        //Add ng-click
       </ul>
     </div>
 	  
